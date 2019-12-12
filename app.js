@@ -19,6 +19,10 @@ app.get("/eventos", (req, res) => {
   res.render("eventos");
 });
 
+app.get("/nexus", (req, res)=>{
+  res.render("eventos/index")
+})
+
 app.get("/eventos-passados", (req, res) => {
   res.render("eventos-passados");
 });
