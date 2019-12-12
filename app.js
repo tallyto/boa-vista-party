@@ -2,6 +2,7 @@ const express = require("express");
 var handlebars = require("express-handlebars");
 const path = require("path");
 const bodyParser = require("body-parser");
+const Atleticas = require('./route/atleticas')
 const app = express();
 
 app.use(express.static(path.join(__dirname, "public")));
@@ -15,13 +16,12 @@ app.get("/", (req, res)=>{
   res.render("eventos")
 })
 
+app.use("/atleticas", Atleticas)
+
 app.get("/eventos", (req, res) => {
   res.render("eventos");
 });
 
-app.get("/nexus", (req, res)=>{
-  res.render("eventos/index")
-})
 
 app.get("/eventos-passados", (req, res) => {
   res.render("eventos-passados");
