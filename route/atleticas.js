@@ -17,8 +17,16 @@ Router.get("/impetuosa", (req, res) => {
   res.render("atleticas/impetuosa");
 });
 
+Router.get("/soberanos", (req, res) => {
+  res.render("atleticas/soberanos");
+});
+
 Router.get("/suprema", (req, res) => {
   res.render("atleticas/suprema");
+});
+
+Router.get("/guerreira", (req, res) => {
+  res.render("atleticas/guerreira");
 });
 
 module.exports = Router;
