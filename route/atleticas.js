@@ -5,16 +5,24 @@ Router.get("/alfa", (req, res) => {
   res.render("atleticas/alfa");
 });
 
+Router.get("/guerreira", (req, res) => {
+  res.render("atleticas/guerreira");
+});
+
+Router.get("/heroica", (req, res) => {
+  res.render("atleticas/heroica");
+});
+
+Router.get("/impetuosa", (req, res) => {
+  res.render("atleticas/impetuosa");
+});
+
 Router.get("/mercenaria", (req, res) => {
   res.render("atleticas/mercenaria");
 });
 
 Router.get("/nexus", (req, res) => {
   res.render("atleticas/nexus");
-});
-
-Router.get("/impetuosa", (req, res) => {
-  res.render("atleticas/impetuosa");
 });
 
 Router.get("/soberanos", (req, res) => {
@@ -24,13 +32,5 @@ Router.get("/soberanos", (req, res) => {
 Router.get("/suprema", (req, res) => {
   res.render("atleticas/suprema");
 });
-
-Router.get("/guerreira", (req, res) => {
-  res.render("atleticas/guerreira");
-});
-
-Router.get("/heroica", (req, res)=>{
-  res.render("atleticas/heroica")
-})
 
 module.exports = Router;
