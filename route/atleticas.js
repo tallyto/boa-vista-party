@@ -29,4 +29,8 @@ Router.get("/guerreira", (req, res) => {
   res.render("atleticas/guerreira");
 });
 
+Router.get("/heroica", (req, res)=>{
+  res.render("atleticas/heroica")
+})
+
 module.exports = Router;
