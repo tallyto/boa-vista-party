@@ -67,6 +67,10 @@ app.get("/atleticas", (req, res) => {
   res.render("atleticas");
 });
 
+app.get("/contato", (req, res)=>{
+  res.render("contato/index")
+})
+
 app.get("*", (req, res) => {
   res.render("404");
 });
