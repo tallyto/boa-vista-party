@@ -1,13 +1,20 @@
+//Express
 const express = require("express");
+
+//MongoDB
 const mongoose = require("mongoose");
 const Router = express.Router();
 
+//Models
 require("./../models/atleticaSchema");
 require("./../models/eventoSchema");
 const atleticaSchema = mongoose.model("atleticas");
 const eventoSchema = mongoose.model("eventos");
+
+//Helpers
 const { eAdmin } = require("./../helpers/eAdmin");
 
+//Rotas
 Router.get("/", eAdmin, (req, res) => {
   res.render("admin/index");
 });

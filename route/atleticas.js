@@ -1,6 +1,8 @@
+//Express
 const express = require("express");
 const Router = express.Router();
 
+//Routes
 Router.get("/alfa", (req, res) => {
   res.render("atleticas/alfa");
 });
