@@ -1,11 +1,13 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
+var uniqueValidator = require("mongoose-unique-validator");
 
 const eventoSchema = new Schema({
   title: {
     type: String,
     required: true,
-    default: "Título"
+    default: "Título",
+    unique: true
   },
   description: {
     type: String,
@@ -18,7 +20,8 @@ const eventoSchema = new Schema({
   },
   slug: {
     type: String,
-    required: true
+    required: true,
+    unique: true
   },
   imgSrc: {
     type: String,
@@ -29,4 +32,5 @@ const eventoSchema = new Schema({
     default: Date.now()
   }
 });
+eventoSchema.plugin(uniqueValidator);
 mongoose.model("eventos", eventoSchema);

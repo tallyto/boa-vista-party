@@ -8,13 +8,25 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
 
-       <li class="nav-item">
+      {{#if user.eAdmin}}
+
+      <li class="nav-item">
+        <a class="nav-link" href="/admin">Admin</a>
+      </li>
+
+
+
+      {{else}}
+
+      {{/if}}
+
+      <li class="nav-item">
         <a class="nav-link" href="/atleticas">Atleticas</a>
       </li>
 
-       <li class="nav-item">
+      <li class="nav-item">
         <a class="nav-link" href="/eventos">Eventos</a>
-      </li>    
+      </li>
 
       <li class="nav-item">
         <a class="nav-link" href="/eventos-passados">Eventos Passados</a>
@@ -24,7 +36,25 @@
         <a class="nav-link" href="/contato">Contato</a>
       </li>
 
-     
+      {{#if user}}
+
+      <li class="nav-item">
+        <a class="nav-link" href="/usuario/logout">Sair</a>
+      </li>
+
+      {{else}}
+
+      <li class="nav-item">
+        <a class="nav-link" href="/usuario/login">Login</a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" href="/usuario/registro">Registro</a>
+      </li>
+
+      {{/if}}
+
+
 
   </div>
 </nav>
