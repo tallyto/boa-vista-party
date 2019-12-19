@@ -15,13 +15,15 @@ Router.get("/registro", (req, res) => {
 Router.post(
   "/registro",
   [
-    check("nome", "Nome menor que 3").isLength({ min: 3 }),
-    check("email", "O email não é valido").isEmail(),
-    check("senha", "Senha menor que 3")
-      .isLength({ min: 3 })
+    check("nome", "O nome precisa ter no minimo 3 caracteres!").isLength({
+      min: 3
+    }),
+    check("email", "O email não é valido!").isEmail(),
+    check("senha", "A senha precisa ter no minimo 4 caracteres!")
+      .isLength({ min: 4 })
       .custom((value, { req, loc, path }) => {
         if (value != req.body.senha2) {
-          throw new Error("As senhas não sao iguais");
+          throw new Error("As senhas não são iguais!");
         } else {
           return value;
         }
@@ -46,7 +48,7 @@ Router.post(
           if (usuario) {
             req.flash(
               "error_msg",
-              "Já existe uma conta com esse email no nosso sistema"
+              "Já existe uma conta com esse email no nosso sistema!"
             );
             res.redirect("/usuario/registro");
           } else {
@@ -59,10 +61,7 @@ Router.post(
             bcrypt.genSalt(10, (erro, salt) => {
               bcrypt.hash(novoUsuario.senha, salt, (erro, hash) => {
                 if (erro) {
-                  req.flash(
-                    "error_msg",
-                    "Houve um erro durante o salvamento do usuario"
-                  );
+                  req.flash("error_msg", "Houve ao criar o usuário!");
                   res.redirect("/");
                 }
 
@@ -77,7 +76,7 @@ Router.post(
                   .catch(erro => {
                     req.flash(
                       "error_msg",
-                      "Houve um erro ao cricar o usuário tente novamente!"
+                      "Houve um erro ao criar o usuário tente novamente!"
                     );
                     res.redirect("/usuario/registro");
                   });
@@ -103,7 +102,6 @@ Router.post("/login", (req, res, next) => {
     failureRedirect: "/usuario/login",
     failureFlash: true
   })(req, res, next);
-  req.flash("success_msg", "Usuário logado com sucesso!");
 });
 
 Router.get("/logout", (req, res) => {

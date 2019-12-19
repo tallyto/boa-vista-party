@@ -13,7 +13,7 @@ const passport = require("passport");
 require("./config/auth")(passport);
 
 //MongoDB
-const mongoose = require("mongoose");
+const MongoDB = require("./config/mongoDB");
 
 //Node
 const path = require("path");
@@ -58,21 +58,13 @@ app.engine("handlebars", handlebars({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
 
 //MongoDB
-
-mongoose
-  .connect(
-    "mongodb+srv://otallyto:Rodrigues_2019@cluster0-jq9ag.mongodb.net/party?retryWrites=true&w=majority",
-    { useNewUrlParser: true, useUnifiedTopology: true }
-  )
-  .then(() => {
-    console.log("Banco de dados concetado com sucesso!");
-  })
+const Db = new MongoDB();
+Db.ConnectProduction()
+  .then(() => console.log("Conexão efefutada com o banco de dados"))
   .catch(error => {
-    console.log("Error: " + error);
+    console.log("erro: " + error);
   });
 
-
-//mongoose.connect('mongodb://localhost:27017/party', {useNewUrlParser: true});
 
 //Rotas
 app.use("/atleticas", Atleticas);
