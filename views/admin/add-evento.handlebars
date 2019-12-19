@@ -11,18 +11,23 @@
 
     <div class="card">
         <div class="card-body">
-            <form action="/admin/evento/add" method="POST">
+            <form action="/cadastrar/evento" method="POST" encType="multipart/form-data">
                 <label for="title">Titulo: </label>
                 <input type="text" id="title" name="title" placeholder="Titulo" class="form-control">
                 <label for="description">Descrição: </label>
                 <input type="text" id="description" name="description" placeholder="Descrição" class="form-control">
                 <label for="slug">Slug: </label>
                 <input type="text" id="slug" name="slug" placeholder="Slug" class="form-control" required="true">
-                <label for="imgSrc">Caminho da imagem: </label>
-                <input type="text" id="imgSrc" name="imgSrc" placeholder="imgSrc" class="form-control">
+                <label for="slug">Imagem: </label>
 
-                <br>
-                <button type="submit" class="btn btn-success">Cadastrar evento</button>
+                <div class="input-group">
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input" name="file">
+                        <label class="custom-file-label">Selecione a imagem</label>
+                    </div>
+
+                </div>
+                <button type="submit" class="btn btn-success mt-3">Cadastrar evento</button>
             </form>
         </div>
     </div>

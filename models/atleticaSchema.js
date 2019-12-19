@@ -1,30 +1,34 @@
 const mongoose = require("mongoose");
-var uniqueValidator = require("mongoose-unique-validator");
 const Schema = mongoose.Schema;
+var uniqueValidator = require("mongoose-unique-validator");
 
-const eventoSchema = new Schema({
+const atleticaSchema = new Schema({
   title: {
     type: String,
-    required: true,
-    unique: true
+    required: true
   },
   description: {
     type: String,
     required: true
+  },
+  isActive: {
+    type: Boolean,
+    default: true
   },
   slug: {
     type: String,
     required: true,
     unique: true
   },
-  imgSrc: {
-    type: String,
-    default: "/img/default.png"
-  },
   createdAt: {
     type: Date,
     default: Date.now()
+  },
+  img: {
+    name: String,
+    size: Number,
+    key: String
   }
 });
-eventoSchema.plugin(uniqueValidator);
-mongoose.model("atleticas", eventoSchema);
+atleticaSchema.plugin(uniqueValidator);
+mongoose.model("atleticas", atleticaSchema);

@@ -5,14 +5,11 @@ var uniqueValidator = require("mongoose-unique-validator");
 const eventoSchema = new Schema({
   title: {
     type: String,
-    required: true,
-    default: "Título",
-    unique: true
+    required: true
   },
   description: {
     type: String,
-    required: true,
-    default: "Descrição"
+    required: true
   },
   isActive: {
     type: Boolean,
@@ -23,13 +20,14 @@ const eventoSchema = new Schema({
     required: true,
     unique: true
   },
-  imgSrc: {
-    type: String,
-    default: "/img/default.png"
-  },
   createdAt: {
     type: Date,
     default: Date.now()
+  },
+  img: {
+    name: String,
+    size: Number,
+    key: String
   }
 });
 eventoSchema.plugin(uniqueValidator);
