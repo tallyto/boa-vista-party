@@ -1,0 +1,26 @@
+
+<div class="card-body">
+
+
+<h2>Lista de Eventos</h2>
+<hr>
+<a href="/admin/cadastrar/evento"><button type="submit" class="btn btn-success">Cadastrar Evento</button></a>
+
+{{#each eventos}}
+    <div class="card mt-4">
+        <div class="card-body">
+            <h5>{{title}}</h5>
+            <p>Descrição: {{description}}</small><br>
+            <small>Data de criação: {{createdAt}}</small><br>
+            <a href="/admin/editar/evento/{{_id}}"><button class= "btn btn-success mt-2 ">Editar evento</button></a>
+            <form action="/admin/deletar/evento" method="POST">
+                <input type="hidden" name="id" value="{{_id}}">
+                <button type="submit" class="btn btn-danger ">Deletar evento</button>
+            </form>
+        </div>
+    </div>
+{{else}}
+    <h4 class="mt-3">Nenhum evento registrado</h4>
+{{/each}}
+
+</div>

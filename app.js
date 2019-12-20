@@ -23,7 +23,6 @@ const Atleticas = require("./route/atleticas");
 const Eventos = require("./route/eventos");
 const Admin = require("./route/admin");
 const User = require("./route/user");
-const Cadastrar = require('./route/cadastrar')
 
 //Sessão
 app.use(
@@ -71,7 +70,6 @@ app.use("/atleticas", Atleticas);
 app.use("/eventos", Eventos);
 app.use("/admin", Admin);
 app.use("/usuario", User);
-app.use("/cadastrar", Cadastrar)
 
 app.get("/", (req, res) => {
   res.render("main");
