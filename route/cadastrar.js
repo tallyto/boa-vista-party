@@ -13,15 +13,17 @@ Router.post(
   eAdmin,
   async (req, res) => {
     const { title, description, slug } = req.body;
+    const {originalname: name, size, key , location: url = ""} = req.file
 
     const newEvento = {
       title,
       description,
       slug,
       img: {
-        name: req.file.originalname,
-        size: req.file.size,
-        key: req.file.filename
+        name,
+        size,
+        key,
+        url
       }
     };
 

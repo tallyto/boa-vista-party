@@ -27,7 +27,8 @@ const eventoSchema = new Schema({
   img: {
     name: String,
     size: Number,
-    key: String
+    key: String,
+    url: String
   }
 });
 eventoSchema.plugin(uniqueValidator);
