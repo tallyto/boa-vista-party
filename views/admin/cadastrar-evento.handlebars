@@ -2,10 +2,7 @@
 
     <h3>Cadastrar Evento</h3>
     {{#each erros}}
-    <div class="alert alert-danger">
-        {{texto}}
-
-    </div>
+    <div class="alert alert-danger"> {{texto}} </div>
     {{else}}
     {{/each}}
 
@@ -13,9 +10,10 @@
         <div class="card-body">
             <form action="/admin/cadastrar/evento" method="POST" encType="multipart/form-data">
                 <label for="title">Titulo: </label>
-                <input type="text" id="title" name="title" placeholder="Titulo" class="form-control">
+                <input type="text" id="title" name="title" placeholder="Titulo" class="form-control" required="true">
                 <label for="description">Descrição: </label>
-                <input type="text" id="description" name="description" placeholder="Descrição" class="form-control">
+                <input type="text" id="description" name="description" placeholder="Descrição" class="form-control"
+                    required="true">
                 <label for="slug">Slug: </label>
                 <input type="text" id="slug" name="slug" placeholder="Slug" class="form-control" required="true">
                 <label for="slug">Imagem: </label>

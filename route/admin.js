@@ -2,6 +2,7 @@
 const express = require("express");
 const Router = express.Router();
 
+//Mongo DB
 const mongoose = require("mongoose");
 require("./../models/eventoSchema");
 const Eventos = mongoose.model("eventos");
@@ -49,17 +50,17 @@ Router.post(
     };
 
     var erros = [];
-    Eventos.create(newEvento)
-      .then(() => {
-        req.flash("success_msg", "Evento criado com sucesso!");
-        res.redirect("/eventos");
-      })
-      .catch(erro => {
-        erros.push({ texto: "Houve um erro ao cadastrar o evento!" });
-        res.render("admin/cadastrar-evento", {
-          erros: erros
-        });
+
+    try {
+      await Eventos.create(newEvento);
+      req.flash("success_msg", "Evento criado com sucesso!");
+      res.redirect("/eventos");
+    } catch (error) {
+      erros.push({ texto: "Houve um erro ao cadastrar o evento!" });
+      res.render("admin/cadastrar-evento", {
+        erros: erros
       });
+    }
   }
 );
 
@@ -69,40 +70,37 @@ Router.get("/editar/evento/:id", eAdmin, async (req, res) => {
   res.render("admin/editar-evento", { evento: evento });
 });
 
-Router.post("/editar/evento", eAdmin, (req, res) => {
+Router.post("/editar/evento", eAdmin, async (req, res) => {
   const { id, title, description, slug } = req.body;
-  Eventos.findById({ _id: id }).then(evento => {
+
+  try {
+    const evento = await Eventos.findById({ _id: id });
     evento.title = title;
     evento.description = description;
     evento.slug = slug;
-
-    evento
-      .save()
-      .then(() => {
-        req.flash("success_msg", "Evento editado com sucesso!");
-        res.redirect("/eventos");
-      })
-      .catch(erro => {
-        req.flash("error_msg", "Houve um erro ao editar o evento!");
-        res.redirect("/admin/eventos");
-      });
-  });
+    evento.save();
+    req.flash("success_msg", "Evento editado com sucesso!");
+    res.redirect("/eventos");
+  } catch (error) {
+    req.flash("error_msg", "Houve um erro ao editar o evento!");
+    res.redirect("/admin/eventos");
+  }
 });
 
-Router.post("/deletar/evento", eAdmin, (req, res) => {
+Router.post("/deletar/evento", eAdmin, async (req, res) => {
   const { id } = req.body;
   var erros = [];
-  Eventos.findByIdAndDelete({ _id: id })
-    .then(() => {
-      req.flash("success_msg", "Evento removido com sucesso!");
-      res.redirect("/eventos");
-    })
-    .catch(() => {
-      erros.push({ texto: "Houve um erro ao deletar o evento!" });
-      res.render("admin/eventos", {
-        erros: erros
-      });
+
+  try {
+    await Eventos.findByIdAndDelete({ _id: id });
+    req.flash("success_msg", "Evento removido com sucesso!");
+    res.redirect("/eventos");
+  } catch (error) {
+    erros.push({ texto: "Houve um erro ao deletar o evento!" });
+    res.render("admin/eventos", {
+      erros: erros
     });
+  }
 });
 
 module.exports = Router;

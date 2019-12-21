@@ -30,8 +30,8 @@ Router.post(
       })
   ],
   (req, res) => {
-    const error = validationResult(req);
     var erros = [];
+    const error = validationResult(req);    
     for (err of error.array()) {
       erros.push({ texto: err.msg });
     }
