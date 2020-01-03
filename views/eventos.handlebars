@@ -1,10 +1,9 @@
 <div class="card-body">
     <h3>Eventos</h3>
-
+ <hr>
     <div class="card-columns">
         {{#each eventos }}
 
-        {{#if isActive}}
         <div class="card" style="width: 18rem;">
             <img src="{{img.url}}" class="card-img-top" alt="{{img.name}}">
             <div class="card-body">
@@ -12,12 +11,17 @@
                 <p class="card-text">{{description}}</p>
                 <a href="/eventos/{{slug}}" class="btn btn-primary">Saiba mais</a>
             </div>
-        </div>       
+        </div>
 
-        {{/if}}
-
+    
+    
         {{/each}}
 
     </div>
+
+    {{#each eventos}}
+    {{else}}
+    <h4 class="mt-2">Nenhum evento disponível</h4>
+    {{/each}}
 
 </div>
