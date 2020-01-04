@@ -1,23 +1,25 @@
-const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
+/* eslint-disable linebreak-style */
+const mongoose = require('mongoose');
+
+const { Schema } = mongoose;
 
 const Usuario = new Schema({
   nome: {
     type: String,
-    required: true
+    required: true,
   },
   email: {
     type: String,
-    required: true
+    required: true,
   },
   eAdmin: {
     type: Number,
-    default: 0
+    default: 0,
   },
   senha: {
     type: String,
-    required: true
-  }
+    required: true,
+  },
 });
 
-mongoose.model("usuarios", Usuario);
+mongoose.model('usuarios', Usuario);

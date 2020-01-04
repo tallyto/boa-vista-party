@@ -1,32 +1,35 @@
-const localStrategy = require("passport-local").Strategy;
-const mongoose = require("mongoose");
-const bcrypt = require("bcrypt");
+/* eslint-disable linebreak-style */
+/* eslint-disable new-cap */
+/* eslint-disable consistent-return */
 
-//Model de usuário
-require("./../models/usuarioSchema");
+const localStrategy = require('passport-local').Strategy;
+const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
 
-const Usuario = mongoose.model("usuarios");
+// Model de usuário
+require('./../models/usuarioSchema');
 
-module.exports = passport => {
+const Usuario = mongoose.model('usuarios');
+
+module.exports = (passport) => {
   passport.use(
     new localStrategy(
-      { usernameField: "email", passwordField: "senha" },
+      { usernameField: 'email', passwordField: 'senha' },
       (email, senha, done) => {
-        Usuario.findOne({ email: email }).then(usuario => {
+        Usuario.findOne({ email }).then((usuario) => {
           if (!usuario) {
-            return done(null, false, { message: "Esta conta não existe!" });
+            return done(null, false, { message: 'Esta conta não existe!' });
           }
 
           bcrypt.compare(senha, usuario.senha, (erro, batem) => {
             if (batem) {
               return done(null, usuario);
-            } else {
-              return done(null, false, { message: "Senha incorreta!" });
             }
+            return done(null, false, { message: 'Senha incorreta!' });
           });
         });
-      }
-    )
+      },
+    ),
   );
 
   passport.serializeUser((usuario, done) => {
