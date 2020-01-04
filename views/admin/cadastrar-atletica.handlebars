@@ -1,0 +1,33 @@
+<div class="card-body">
+
+    <h3>Cadastrar atletica</h3>
+    {{#each erros}}
+    <div class="alert alert-danger"> {{texto}} </div>
+    {{else}}
+    {{/each}}
+
+    <div class="card">
+        <div class="card-body">
+            <form action="/admin/cadastrar/atletica" method="POST" encType="multipart/form-data">
+                <label for="title">Titulo: </label>
+                <input type="text" id="title" name="title" placeholder="Titulo" class="form-control" required="true">
+                <label for="description">Descrição: </label>
+                <input type="text" id="description" name="description" placeholder="Descrição" class="form-control"
+                    required="true">
+                <label for="slug">Slug: </label>
+                <input type="text" id="slug" name="slug" placeholder="Slug" class="form-control" required="true">
+                <label for="slug">Imagem: </label>
+
+                <div class="input-group">
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input" name="file">
+                        <label class="custom-file-label">Selecione a imagem</label>
+                    </div>
+
+                </div>
+                <button type="submit" class="btn btn-success mt-3">Cadastrar atletica</button>
+            </form>
+        </div>
+    </div>
+
+</div>

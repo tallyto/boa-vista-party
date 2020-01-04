@@ -10,9 +10,10 @@ const Router = express.Router();
 // Mongo DB
 const mongoose = require('mongoose');
 require('../models/eventoSchema');
+require('../models/atleticaSchema');
 
 const Eventos = mongoose.model('eventos');
-
+const Atleticas = mongoose.model('atleticas');
 // Multer
 const multer = require('multer');
 const multerConfig = require('../config/multer');
@@ -30,8 +31,17 @@ Router.get('/eventos', eAdmin, async (req, res) => {
   res.render('admin/eventos', { eventos });
 });
 
+Router.get('/atleticas', eAdmin, async (req, res) => {
+  const atleticas = await Atleticas.find();
+  res.render('admin/atleticas', { atleticas });
+});
+
 Router.get('/cadastrar/evento', eAdmin, (req, res) => {
   res.render('admin/cadastrar-evento');
+});
+
+Router.get('/cadastrar/atletica', eAdmin, (req, res) => {
+  res.render('admin/cadastrar-atletica');
 });
 
 Router.post(
