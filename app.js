@@ -11,6 +11,7 @@ const bodyParser = require('body-parser');
 const session = require('express-session');
 const flash = require('connect-flash');
 
+
 const app = express();
 
 // Autenticação
@@ -42,6 +43,7 @@ app.use(bodyParser.json());
 app.use(serveStatic(path.join(__dirname, 'public')));
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(flash());
+
 
 // Auth
 app.use(passport.initialize());
