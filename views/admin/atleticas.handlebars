@@ -4,8 +4,10 @@
     <h2>Lista de Atleticas</h2>
     <hr>
     <a href="/admin/cadastrar/atletica"><button type="submit" class="btn btn-success">Cadastrar atletica</button></a>
+    <div class="card-columns">
 
     {{#each atleticas}}
+
     <div class="card mt-2">
         <div class="card-body">
             <h5>{{title}}</h5>
@@ -18,8 +20,11 @@
                 </form>
         </div>
     </div>
+    
     {{else}}
     <h4 class="mt-2">Nenhuma atlética registrada</h4>
     {{/each}}
+
+    </div>
 
 </div>

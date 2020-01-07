@@ -7,7 +7,18 @@ const express = require('express');
 
 const Router = express.Router();
 
+const mongoose = require('mongoose');
+require('../models/atleticaSchema');
+
+const Atleticas = mongoose.model('atleticas');
+
 // Routes
+Router.get('/', async (req, res) => {
+  const atleticas = await Atleticas.find();
+  res.render('atleticas', { atleticas });
+});
+
+
 Router.get('/alfa', (req, res) => {
   res.render('atleticas/alfa');
 });

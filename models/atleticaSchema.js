@@ -30,6 +30,7 @@ const atleticaSchema = new Schema({
     name: String,
     size: Number,
     key: String,
+    url: String,
   },
 });
 atleticaSchema.plugin(uniqueValidator);
