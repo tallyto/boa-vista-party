@@ -20,12 +20,14 @@ const bcrypt = require('bcrypt');
 const passport = require('passport');
 const { check, validationResult } = require('express-validator');
 
-Router.get('/registro', (req, res) => {
+const { eAdmin } = require('./../helpers/eAdmin');
+
+Router.get('/cadastro', eAdmin, (req, res) => {
   res.render('usuarios/registro');
 });
 
 Router.post(
-  '/registro',
+  '/registro', eAdmin,
   [
     check('nome', 'O nome precisa ter no minimo 3 caracteres!').isLength({
       min: 3,
