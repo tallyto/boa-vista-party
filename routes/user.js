@@ -23,7 +23,7 @@ const { check, validationResult } = require('express-validator');
 const { eAdmin } = require('./../helpers/eAdmin');
 
 Router.get('/cadastro', eAdmin, (req, res) => {
-  res.render('usuarios/registro');
+  res.render('usuarios/registro', { title: 'Cadastrar usuário' });
 });
 
 Router.post(
@@ -52,7 +52,7 @@ Router.post(
 
     if (!error.isEmpty()) {
       res.render('usuarios/registro', {
-        erros,
+        erros, title: 'Cadastrar usuário',
       });
     } else {
       Usuario.findOne({
@@ -62,7 +62,7 @@ Router.post(
           if (usuario) {
             req.flash(
               'error_msg',
-              'Já existe uma conta com esse email no nosso sistema!',
+              'O email informado já possui cadastro no site!',
             );
             res.redirect('/usuario/registro');
           } else {
@@ -75,7 +75,7 @@ Router.post(
             bcrypt.genSalt(10, (erro, salt) => {
               bcrypt.hash(novoUsuario.senha, salt, (erro, hash) => {
                 if (erro) {
-                  req.flash('error_msg', 'Houve ao criar o usuário!');
+                  req.flash('error_msg', 'Erro ao cadastrar usuário!');
                   res.redirect('/');
                 }
 
@@ -84,7 +84,7 @@ Router.post(
                 novoUsuario
                   .save()
                   .then(() => {
-                    req.flash('success_msg', 'Usuário criado com sucesso!');
+                    req.flash('success_msg', 'Usuário cadastrado com sucesso!');
                     res.redirect('/');
                   })
                   .catch((erro) => {
@@ -107,7 +107,7 @@ Router.post(
 );
 
 Router.get('/login', (req, res) => {
-  res.render('usuarios/login');
+  res.render('usuarios/login', { title: 'Entrar' });
 });
 
 Router.post('/login', (req, res, next) => {

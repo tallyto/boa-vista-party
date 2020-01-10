@@ -14,11 +14,11 @@ const Eventos = mongoose.model('eventos');
 // Rotas
 Router.get('/', async (req, res) => {
   const eventos = await Eventos.find();
-  res.render('eventos', { eventos });
+  res.render('eventos', { eventos, title: 'Eventos' });
 });
 
-Router.get('/projeto-x', (req, res) => {
-  res.render('eventos/projeto-x');
-});
+// Router.get('/projeto-x', (req, res) => {
+//   res.render('eventos/projeto-x');
+// });
 
 module.exports = Router;

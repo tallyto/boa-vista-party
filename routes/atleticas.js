@@ -15,40 +15,40 @@ const Atleticas = mongoose.model('atleticas');
 // Routes
 Router.get('/', async (req, res) => {
   const atleticas = await Atleticas.find();
-  res.render('atleticas', { atleticas });
+  res.render('atleticas', { atleticas, title: 'Atléticas' });
 });
 
 
 Router.get('/alfa', (req, res) => {
-  res.render('atleticas/alfa');
+  res.render('atleticas/alfa', { title: 'Atlética Alfa' });
 });
 
 Router.get('/guerreira', (req, res) => {
-  res.render('atleticas/guerreira');
+  res.render('atleticas/guerreira', { title: 'Atlética Guerreira' });
 });
 
 Router.get('/heroica', (req, res) => {
-  res.render('atleticas/heroica');
+  res.render('atleticas/heroica', { title: 'Atlética Heróica' });
 });
 
 Router.get('/impetuosa', (req, res) => {
-  res.render('atleticas/impetuosa');
+  res.render('atleticas/impetuosa', { title: 'Atlética Impetuosa' });
 });
 
 Router.get('/mercenaria', (req, res) => {
-  res.render('atleticas/mercenaria');
+  res.render('atleticas/mercenaria', { title: 'Atlética Mercenária' });
 });
 
 Router.get('/nexus', (req, res) => {
-  res.render('atleticas/nexus');
+  res.render('atleticas/nexus', { title: 'Atlética Nexus' });
 });
 
 Router.get('/soberanos', (req, res) => {
-  res.render('atleticas/soberanos');
+  res.render('atleticas/soberanos', { title: 'Atlética Soberanos' });
 });
 
 Router.get('/suprema', (req, res) => {
-  res.render('atleticas/suprema');
+  res.render('atleticas/suprema', { title: 'Atlética Suprema' });
 });
 
 module.exports = Router;

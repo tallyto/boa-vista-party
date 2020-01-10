@@ -23,25 +23,25 @@ const { eAdmin } = require('../helpers/eAdmin');
 
 // Rotas
 Router.get('/', eAdmin, (req, res) => {
-  res.render('admin/index');
+  res.render('admin/index', { title: 'Painel administrativo' });
 });
 
 Router.get('/eventos', eAdmin, async (req, res) => {
   const eventos = await Eventos.find();
-  res.render('admin/eventos', { eventos });
+  res.render('admin/eventos', { eventos, title: 'Eventos' });
 });
 
 Router.get('/atleticas', eAdmin, async (req, res) => {
   const atleticas = await Atleticas.find();
-  res.render('admin/atleticas', { atleticas });
+  res.render('admin/atleticas', { atleticas, title: 'Atléticas' });
 });
 
 Router.get('/cadastrar/evento', eAdmin, (req, res) => {
-  res.render('admin/cadastrar-evento');
+  res.render('admin/cadastrar-evento', { title: 'Cadastrar evento!' });
 });
 
 Router.get('/cadastrar/atletica', eAdmin, (req, res) => {
-  res.render('admin/cadastrar-atletica');
+  res.render('admin/cadastrar-atletica', { title: 'Cadastrar atlética' });
 });
 
 Router.post(
@@ -76,7 +76,7 @@ Router.post(
     } catch (error) {
       erros.push({ texto: 'Houve um erro ao cadastrar o evento!' });
       res.render('admin/cadastrar-evento', {
-        erros,
+        erros, title: 'Cadastrar evento!',
       });
     }
   },
@@ -112,7 +112,7 @@ Router.post('/cadastrar/atletica', eAdmin,
     } catch (error) {
       erros.push({ texto: 'Houve um erro ao cadastrar a atlética!' });
       res.render('admin/cadastrar-atletica', {
-        erros,
+        erros, title: 'Cadastrar atlética!',
       });
     }
   });
@@ -120,13 +120,13 @@ Router.post('/cadastrar/atletica', eAdmin,
 Router.get('/editar/evento/:id', eAdmin, async (req, res) => {
   const { id } = req.params;
   const evento = await Eventos.findById({ _id: id });
-  res.render('admin/editar-evento', { evento });
+  res.render('admin/editar-evento', { evento, title: `Editar evento ${evento.title}` });
 });
 
 Router.get('/editar/atletica/:id', eAdmin, async (req, res) => {
   const { id } = req.params;
   const atletica = await Atleticas.findById({ _id: id });
-  res.render('admin/editar-atletica', { atletica });
+  res.render('admin/editar-atletica', { atletica, title: `Editar atlética ${atletica.title}` });
 });
 
 Router.post('/editar/evento', eAdmin, async (req, res) => {
@@ -178,7 +178,7 @@ Router.post('/deletar/evento', eAdmin, async (req, res) => {
   } catch (error) {
     erros.push({ texto: 'Houve um erro ao deletar o evento!' });
     res.render('admin/eventos', {
-      erros,
+      erros, title: 'Eventos',
     });
   }
 });
@@ -194,7 +194,7 @@ Router.post('/deletar/atletica', eAdmin, async (req, res) => {
   } catch (error) {
     erros.push({ texto: 'Houve um erro ao deletar a atlética!' });
     res.render('admin/atleticas', {
-      erros,
+      erros, title: 'Atléticas',
     });
   }
 });

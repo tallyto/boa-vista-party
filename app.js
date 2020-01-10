@@ -76,16 +76,16 @@ app.use('/admin', Admin);
 app.use('/usuario', User);
 
 app.get('/', (req, res) => {
-  res.render('main');
+  res.render('main', { title: 'Boa Vista Party - Seu site de eventos em Boa Vista!' });
 });
 
 
 app.get('/contato', (req, res) => {
-  res.render('contato/index');
+  res.render('contato/index', { title: 'Contato' });
 });
 
 app.get('*', (req, res) => {
-  res.render('404');
+  res.render('404', { title: 'Página não encontrada!' });
 });
 
 const PORT = process.env.PORT || 3001;
