@@ -23,7 +23,7 @@ const { eAdmin } = require('../helpers/eAdmin');
 
 // Rotas
 Router.get('/', eAdmin, (req, res) => {
-  res.render('admin/index', { title: 'Painel administrativo' });
+  res.render('admin/index', { title: 'Painel Administrativo' });
 });
 
 Router.get('/eventos', eAdmin, async (req, res) => {
@@ -37,11 +37,11 @@ Router.get('/atleticas', eAdmin, async (req, res) => {
 });
 
 Router.get('/cadastrar/evento', eAdmin, (req, res) => {
-  res.render('admin/cadastrar-evento', { title: 'Cadastrar evento!' });
+  res.render('admin/cadastrar-evento', { title: 'Cadastrar Evento' });
 });
 
 Router.get('/cadastrar/atletica', eAdmin, (req, res) => {
-  res.render('admin/cadastrar-atletica', { title: 'Cadastrar atlética' });
+  res.render('admin/cadastrar-atletica', { title: 'Cadastrar Atlética' });
 });
 
 Router.post(
@@ -76,7 +76,7 @@ Router.post(
     } catch (error) {
       erros.push({ texto: 'Houve um erro ao cadastrar o evento!' });
       res.render('admin/cadastrar-evento', {
-        erros, title: 'Cadastrar evento!',
+        erros, title: 'Cadastrar Evento',
       });
     }
   },
@@ -112,7 +112,7 @@ Router.post('/cadastrar/atletica', eAdmin,
     } catch (error) {
       erros.push({ texto: 'Houve um erro ao cadastrar a atlética!' });
       res.render('admin/cadastrar-atletica', {
-        erros, title: 'Cadastrar atlética!',
+        erros, title: 'Cadastrar atlética',
       });
     }
   });
