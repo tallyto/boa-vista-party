@@ -53,6 +53,7 @@ app.use((req, res, next) => {
   res.locals.success_msg = req.flash('success_msg');
   res.locals.error_msg = req.flash('error_msg');
   res.locals.error = req.flash('error');
+  res.locals.title = req.flash('title');
   res.locals.user = req.user || null;
   next();
 });
@@ -76,16 +77,18 @@ app.use('/admin', Admin);
 app.use('/usuario', User);
 
 app.get('/', (req, res) => {
-  res.render('main', { title: 'Boa Vista Party - Seu site de eventos em Boa Vista!' });
+  const title = { title: 'Boa Vista Party - Seu site de eventos e ações acadêmicas em Boa Vista/RR' };
+  res.render('main', title);
 });
 
-
 app.get('/contato', (req, res) => {
-  res.render('contato/index', { title: 'Contato' });
+  const contato = { title: 'Contato' };
+  res.render('contato/index', contato);
 });
 
 app.get('*', (req, res) => {
-  res.render('404', { title: 'Página não encontrada!' });
+  const notFound = { title: 'Página não encontrada' };
+  res.render('404', notFound);
 });
 
 const PORT = process.env.PORT || 3001;

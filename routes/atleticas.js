@@ -14,7 +14,7 @@ const Atleticas = mongoose.model('atleticas');
 
 // Routes
 Router.get('/', async (req, res) => {
-  const atleticas = await Atleticas.find();
+  const atleticas = await Atleticas.find().sort({ title: 1 });
   res.render('atleticas', { atleticas, title: 'Atléticas' });
 });
 

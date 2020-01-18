@@ -27,12 +27,12 @@ Router.get('/', eAdmin, (req, res) => {
 });
 
 Router.get('/eventos', eAdmin, async (req, res) => {
-  const eventos = await Eventos.find();
+  const eventos = await Eventos.find().sort({ title: 1 });
   res.render('admin/eventos', { eventos, title: 'Eventos' });
 });
 
 Router.get('/atleticas', eAdmin, async (req, res) => {
-  const atleticas = await Atleticas.find();
+  const atleticas = await Atleticas.find().sort({ title: 1 });
   res.render('admin/atleticas', { atleticas, title: 'Atléticas' });
 });
 
