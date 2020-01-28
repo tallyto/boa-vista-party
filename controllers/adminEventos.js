@@ -17,6 +17,12 @@ function removeImageS3(key) {
   s3.deleteObject({
     Bucket: 'upload-party',
     Key: key,
+  }, (err, data) => {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log(data);
+    }
   });
 }
 
