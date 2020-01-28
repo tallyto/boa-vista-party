@@ -15,7 +15,7 @@ const s3 = new aws.S3(
 
 function removeImageS3(key) {
   s3.deleteObject({
-    Bucket: 'carteirinha-atletica',
+    Bucket: 'upload-party',
     Key: key,
   });
 }
