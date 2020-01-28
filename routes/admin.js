@@ -7,15 +7,12 @@ const express = require('express');
 
 const Router = express.Router();
 
-// Mongo DB
-const mongoose = require('mongoose');
-require('../models/eventoSchema');
-require('../models/atleticaSchema');
-
-const Eventos = mongoose.model('eventos');
-const Atleticas = mongoose.model('atleticas');
-// Multer
+// Controllers
 const multer = require('multer');
+const atleticaController = require('./../controllers/adminAtleticas');
+const eventosController = require('./../controllers/adminEventos');
+
+// Multer
 const multerConfig = require('../config/multer');
 
 // Helpers
@@ -26,177 +23,26 @@ Router.get('/', eAdmin, (req, res) => {
   res.render('admin/index', { title: 'Painel Administrativo' });
 });
 
-Router.get('/eventos', eAdmin, async (req, res) => {
-  const eventos = await Eventos.find().sort({ title: 1 });
-  res.render('admin/eventos', { eventos, title: 'Eventos' });
-});
-
-Router.get('/atleticas', eAdmin, async (req, res) => {
-  const atleticas = await Atleticas.find().sort({ title: 1 });
-  res.render('admin/atleticas', { atleticas, title: 'Atléticas' });
-});
-
-Router.get('/cadastrar/evento', eAdmin, (req, res) => {
-  res.render('admin/cadastrar-evento', { title: 'Cadastrar Evento' });
-});
-
-Router.get('/cadastrar/atletica', eAdmin, (req, res) => {
-  res.render('admin/cadastrar-atletica', { title: 'Cadastrar Atlética' });
-});
-
+// Evento
+Router.get('/eventos', eAdmin, eventosController.listarEventos);
+Router.get('/cadastrar/evento', eAdmin, eventosController.pageCadastrarEvento);
 Router.post(
   '/cadastrar/evento',
   eAdmin,
   multer(multerConfig).single('file'),
-  eAdmin,
-  async (req, res) => {
-    const { title, description, slug } = req.body;
-    const {
-      originalname: name, size, key, location: url = '',
-    } = req.file;
-
-    const newEvento = {
-      title,
-      description,
-      slug,
-      img: {
-        name,
-        size,
-        key,
-        url,
-      },
-    };
-
-    const erros = [];
-
-    try {
-      await Eventos.create(newEvento);
-      req.flash('success_msg', 'Evento criado com sucesso!');
-      res.redirect('/eventos');
-    } catch (error) {
-      erros.push({ texto: 'Houve um erro ao cadastrar o evento!' });
-      res.render('admin/cadastrar-evento', {
-        erros, title: 'Cadastrar Evento',
-      });
-    }
-  },
+  eventosController.cadastrarEvento,
 );
+Router.post('/editar/evento', eAdmin, eventosController.editarEvento);
+Router.post('/deletar/evento', eAdmin, eventosController.deletarEvento);
 
+// Atleticas
+Router.get('/atleticas', eAdmin, atleticaController.listarAtleticas);
+Router.get('/cadastrar/atletica', eAdmin, atleticaController.pageCadastrarAtletica);
 Router.post('/cadastrar/atletica', eAdmin,
   multer(multerConfig).single('file'),
   eAdmin,
-  async (req, res) => {
-    const { title, description, slug } = req.body;
-    const {
-      originalname: name, size, key, location: url = '',
-    } = req.file;
-
-    const newAtletica = {
-      title,
-      description,
-      slug,
-      img: {
-        name,
-        size,
-        key,
-        url,
-      },
-    };
-
-    const erros = [];
-
-    try {
-      await Atleticas.create(newAtletica);
-      req.flash('success_msg', 'Atlética cadastrada com sucesso!');
-      res.redirect('/atleticas');
-    } catch (error) {
-      erros.push({ texto: 'Houve um erro ao cadastrar a atlética!' });
-      res.render('admin/cadastrar-atletica', {
-        erros, title: 'Cadastrar atlética',
-      });
-    }
-  });
-
-Router.get('/editar/evento/:id', eAdmin, async (req, res) => {
-  const { id } = req.params;
-  const evento = await Eventos.findById({ _id: id });
-  res.render('admin/editar-evento', { evento, title: `Editar evento ${evento.title}` });
-});
-
-Router.get('/editar/atletica/:id', eAdmin, async (req, res) => {
-  const { id } = req.params;
-  const atletica = await Atleticas.findById({ _id: id });
-  res.render('admin/editar-atletica', { atletica, title: `Editar atlética ${atletica.title}` });
-});
-
-Router.post('/editar/evento', eAdmin, async (req, res) => {
-  const {
-    id, title, description, slug,
-  } = req.body;
-
-  try {
-    const evento = await Eventos.findById({ _id: id });
-    evento.title = title;
-    evento.description = description;
-    evento.slug = slug;
-    evento.save();
-    req.flash('success_msg', 'Evento editado com sucesso!');
-    res.redirect('/eventos');
-  } catch (error) {
-    req.flash('error_msg', 'Houve um erro ao editar o evento!');
-    res.redirect('/admin/eventos');
-  }
-});
-
-Router.post('/editar/atletica', eAdmin, async (req, res) => {
-  const {
-    id, title, description, slug,
-  } = req.body;
-
-  try {
-    const atletica = await Atleticas.findById({ _id: id });
-    atletica.title = title;
-    atletica.description = description;
-    atletica.slug = slug;
-    atletica.save();
-    req.flash('success_msg', 'Atética editada com sucesso!');
-    res.redirect('/atleticas');
-  } catch (error) {
-    req.flash('error_msg', 'Houve um erro ao editar atlética!');
-    res.redirect('/admin/atleticas');
-  }
-});
-
-Router.post('/deletar/evento', eAdmin, async (req, res) => {
-  const { id } = req.body;
-  const erros = [];
-
-  try {
-    await Eventos.findByIdAndDelete({ _id: id });
-    req.flash('success_msg', 'Evento removido com sucesso!');
-    res.redirect('/eventos');
-  } catch (error) {
-    erros.push({ texto: 'Houve um erro ao deletar o evento!' });
-    res.render('admin/eventos', {
-      erros, title: 'Eventos',
-    });
-  }
-});
-
-Router.post('/deletar/atletica', eAdmin, async (req, res) => {
-  const { id } = req.body;
-  const erros = [];
-
-  try {
-    await Atleticas.findByIdAndDelete({ _id: id });
-    req.flash('success_msg', 'Atlética removida com sucesso!');
-    res.redirect('/atleticas');
-  } catch (error) {
-    erros.push({ texto: 'Houve um erro ao deletar a atlética!' });
-    res.render('admin/atleticas', {
-      erros, title: 'Atléticas',
-    });
-  }
-});
+  atleticaController.cadastrarAtletica);
+Router.post('/editar/atletica', eAdmin, atleticaController.editarAtletica);
+Router.post('/deletar/atletica', eAdmin, atleticaController.deletarAtletica);
 
 module.exports = Router;
