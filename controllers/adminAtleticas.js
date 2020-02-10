@@ -1,44 +1,25 @@
-/* eslint-disable linebreak-style */
-/* eslint-disable no-unused-vars */
 const mongoose = require('mongoose');
-const aws = require('aws-sdk');
 require('../models/atleticaSchema');
+const removeImageS3 = require('./../config/removeImageS3');
 
 const Atleticas = mongoose.model('atleticas');
-const s3 = new aws.S3(
-  {
-    accessKeyId: 'AKIAVHKUOQJ4DWASD7F5',
-    secretAccessKey: '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',
-    region: 'sa-east-1',
-  },
-);
 
-function removeImageS3(key) {
-  s3.deleteObject({
-    Bucket: 'upload-party',
-    Key: key,
-  }, (err, data) => {
-    if (err) {
-      console.log(err);
-    } else {
-      console.log(data);
-    }
-  });
-}
-
-module.exports = {
+class AdminController {
   async listarAtleticas(req, res) {
     const atleticas = await Atleticas.find().sort({ title: 1 });
     res.render('admin/atleticas', { atleticas, title: 'Atléticas' });
-  },
+  }
+
   pageCadastrarAtletica(req, res) {
     res.render('admin/cadastrar-atletica', { title: 'Cadastrar Atlética' });
-  },
+  }
+
   async pageEditarAtletica(req, res) {
     const { id } = req.params;
     const atletica = await Atleticas.findById({ _id: id });
     res.render('admin/editar-atletica', { atletica, title: `Editar atlética ${atletica.title}` });
-  },
+  }
+
   async editarAtletica(req, res) {
     const {
       id, title, description, slug,
@@ -56,7 +37,8 @@ module.exports = {
       req.flash('error_msg', 'Houve um erro ao editar atlética!');
       res.redirect('/admin/atleticas');
     }
-  },
+  }
+
   async deletarAtletica(req, res) {
     const { id } = req.body;
     const erros = [];
@@ -72,7 +54,8 @@ module.exports = {
         erros, title: 'Atléticas',
       });
     }
-  },
+  }
+
   async cadastrarAtletica(req, res) {
     const { title, description, slug } = req.body;
     const {
@@ -103,5 +86,6 @@ module.exports = {
         erros, title: 'Cadastrar atlética',
       });
     }
-  },
-};
+  }
+}
+module.exports = new AdminController();

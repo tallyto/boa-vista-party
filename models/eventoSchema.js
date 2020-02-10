@@ -1,8 +1,6 @@
-/* eslint-disable linebreak-style */
 const mongoose = require('mongoose');
 
 const { Schema } = mongoose;
-const uniqueValidator = require('mongoose-unique-validator');
 
 const eventoSchema = new Schema({
   title: {
@@ -20,7 +18,6 @@ const eventoSchema = new Schema({
   slug: {
     type: String,
     required: true,
-    unique: true,
   },
   createdAt: {
     type: Date,
@@ -32,6 +29,6 @@ const eventoSchema = new Schema({
     key: String,
     url: String,
   },
-});
-eventoSchema.plugin(uniqueValidator);
+}, { timestamps: true });
+
 mongoose.model('eventos', eventoSchema);

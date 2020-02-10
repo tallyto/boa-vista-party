@@ -1,7 +1,3 @@
-/* eslint-disable linebreak-style */
-/* eslint-disable no-console */
-// eslint-disable-next-line linebreak-style
-
 // Express
 const express = require('express');
 

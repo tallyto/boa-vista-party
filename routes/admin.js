@@ -1,7 +1,3 @@
-/* eslint-disable linebreak-style */
-/* eslint-disable no-console */
-// eslint-disable-next-line linebreak-style
-
 // Express
 const express = require('express');
 
@@ -18,31 +14,33 @@ const multerConfig = require('../config/multer');
 // Helpers
 const { eAdmin } = require('../helpers/eAdmin');
 
+// Rotas protegidas por login
+Router.use(eAdmin);
+
 // Rotas
-Router.get('/', eAdmin, (req, res) => {
+Router.get('/', (req, res) => {
   res.render('admin/index', { title: 'Painel Administrativo' });
 });
 
 // Evento
-Router.get('/eventos', eAdmin, eventosController.listarEventos);
-Router.get('/cadastrar/evento', eAdmin, eventosController.pageCadastrarEvento);
+Router.get('/eventos', eventosController.listarEventos);
+Router.get('/cadastrar/evento', eventosController.pageCadastrarEvento);
 Router.post(
   '/cadastrar/evento',
-  eAdmin,
   multer(multerConfig).single('file'),
   eventosController.cadastrarEvento,
 );
-Router.post('/editar/evento', eAdmin, eventosController.editarEvento);
-Router.post('/deletar/evento', eAdmin, eventosController.deletarEvento);
+Router.post('/editar/evento', eventosController.editarEvento);
+Router.post('/deletar/evento', eventosController.deletarEvento);
 
 // Atleticas
-Router.get('/atleticas', eAdmin, atleticaController.listarAtleticas);
-Router.get('/cadastrar/atletica', eAdmin, atleticaController.pageCadastrarAtletica);
-Router.post('/cadastrar/atletica', eAdmin,
+Router.get('/atleticas', atleticaController.listarAtleticas);
+Router.get('/cadastrar/atletica', atleticaController.pageCadastrarAtletica);
+Router.post('/cadastrar/atletica',
   multer(multerConfig).single('file'),
-  eAdmin,
   atleticaController.cadastrarAtletica);
-Router.post('/editar/atletica', eAdmin, atleticaController.editarAtletica);
-Router.post('/deletar/atletica', eAdmin, atleticaController.deletarAtletica);
+Router.get('/editar/atletica/:id', atleticaController.pageEditarAtletica);
+Router.post('/editar/atletica', atleticaController.editarAtletica);
+Router.post('/deletar/atletica', atleticaController.deletarAtletica);
 
 module.exports = Router;

@@ -1,8 +1,6 @@
-/* eslint-disable linebreak-style */
 const mongoose = require('mongoose');
 
 const { Schema } = mongoose;
-const uniqueValidator = require('mongoose-unique-validator');
 
 const atleticaSchema = new Schema({
   title: {
@@ -20,11 +18,6 @@ const atleticaSchema = new Schema({
   slug: {
     type: String,
     required: true,
-    unique: true,
-  },
-  createdAt: {
-    type: Date,
-    default: Date.now(),
   },
   img: {
     name: String,
@@ -32,6 +25,6 @@ const atleticaSchema = new Schema({
     key: String,
     url: String,
   },
-});
-atleticaSchema.plugin(uniqueValidator);
+}, { timestamps: true });
+
 mongoose.model('atleticas', atleticaSchema);
