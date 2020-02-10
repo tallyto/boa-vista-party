@@ -4,7 +4,7 @@ const removeImageS3 = require('./../config/removeImageS3');
 
 const Atleticas = mongoose.model('atleticas');
 
-class AdminController {
+class AtleticaController {
   async listarAtleticas(req, res) {
     const atleticas = await Atleticas.find().sort({ title: 1 });
     res.render('admin/atleticas', { atleticas, title: 'Atléticas' });
@@ -88,4 +88,4 @@ class AdminController {
     }
   }
 }
-module.exports = new AdminController();
+module.exports = new AtleticaController();

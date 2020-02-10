@@ -5,8 +5,8 @@ const Router = express.Router();
 
 // Controllers
 const multer = require('multer');
-const atleticaController = require('./../controllers/adminAtleticas');
-const eventosController = require('./../controllers/adminEventos');
+const AtleticaController = require('./../controllers/AtleticaController');
+const EventosController = require('./../controllers/EventosController');
 
 // Multer
 const multerConfig = require('../config/multer');
@@ -23,24 +23,25 @@ Router.get('/', (req, res) => {
 });
 
 // Evento
-Router.get('/eventos', eventosController.listarEventos);
-Router.get('/cadastrar/evento', eventosController.pageCadastrarEvento);
+Router.get('/eventos', EventosController.listarEventos);
+Router.get('/cadastrar/evento', EventosController.pageCadastrarEvento);
 Router.post(
   '/cadastrar/evento',
   multer(multerConfig).single('file'),
-  eventosController.cadastrarEvento,
+  EventosController.cadastrarEvento,
 );
-Router.post('/editar/evento', eventosController.editarEvento);
-Router.post('/deletar/evento', eventosController.deletarEvento);
+Router.get('/editar/evento/:id', EventosController.pageEditarEvento);
+Router.post('/editar/evento', EventosController.editarEvento);
+Router.post('/deletar/evento', EventosController.deletarEvento);
 
 // Atleticas
-Router.get('/atleticas', atleticaController.listarAtleticas);
-Router.get('/cadastrar/atletica', atleticaController.pageCadastrarAtletica);
+Router.get('/atleticas', AtleticaController.listarAtleticas);
+Router.get('/cadastrar/atletica', AtleticaController.pageCadastrarAtletica);
 Router.post('/cadastrar/atletica',
   multer(multerConfig).single('file'),
-  atleticaController.cadastrarAtletica);
-Router.get('/editar/atletica/:id', atleticaController.pageEditarAtletica);
-Router.post('/editar/atletica', atleticaController.editarAtletica);
-Router.post('/deletar/atletica', atleticaController.deletarAtletica);
+  AtleticaController.cadastrarAtletica);
+Router.get('/editar/atletica/:id', AtleticaController.pageEditarAtletica);
+Router.post('/editar/atletica', AtleticaController.editarAtletica);
+Router.post('/deletar/atletica', AtleticaController.deletarAtletica);
 
 module.exports = Router;
