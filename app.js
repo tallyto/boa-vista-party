@@ -4,7 +4,10 @@ const serveStatic = require('serve-static');
 const favicon = require('serve-favicon');
 const bodyParser = require('body-parser');
 const session = require('express-session');
+const cookieParser = require('cookie-parser');
 const flash = require('connect-flash');
+const helmet = require('helmet');
+const compression = require('compression');
 
 // Autenticação
 const passport = require('passport');
@@ -44,6 +47,9 @@ class App {
     this.server.use(serveStatic(path.join(__dirname, 'public')));
     this.server.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
     this.server.use(flash());
+    this.server.use(cookieParser());
+    this.server.use(helmet());
+    this.server.use(compression());
 
     // Auth
     this.server.use(passport.initialize());
