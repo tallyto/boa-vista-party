@@ -1,8 +1,6 @@
 const mongoose = require('mongoose');
 
-const { Schema } = mongoose;
-
-const atleticaSchema = new Schema({
+const atleticaSchema = new mongoose.Schema({
   title: {
     type: String,
     required: true,
@@ -27,4 +25,4 @@ const atleticaSchema = new Schema({
   },
 }, { timestamps: true });
 
-mongoose.model('atleticas', atleticaSchema);
+module.exports = mongoose.model('atleticas', atleticaSchema);

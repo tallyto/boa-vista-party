@@ -1,5 +1,3 @@
-/* eslint-disable linebreak-style */
-/* eslint-disable consistent-return */
 module.exports = {
   eAdmin(req, res, next) {
     if (req.isAuthenticated() && req.user.eAdmin === 1) {
@@ -7,6 +5,6 @@ module.exports = {
     }
 
     req.flash('error_msg', 'Você precisa ser um Admin!');
-    res.redirect('/');
+    return res.redirect('/');
   },
 };

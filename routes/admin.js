@@ -1,7 +1,7 @@
 // Express
-const express = require('express');
+const { Router } = require('express');
 
-const Router = express.Router();
+const routes = Router();
 
 // Controllers
 const multer = require('multer');
@@ -15,33 +15,33 @@ const multerConfig = require('../config/multer');
 const { eAdmin } = require('../helpers/eAdmin');
 
 // Rotas protegidas por login
-Router.use(eAdmin);
+routes.use(eAdmin);
 
 // Rotas
-Router.get('/', (req, res) => {
+routes.get('/', (req, res) => {
   res.render('admin/index', { title: 'Painel Administrativo' });
 });
 
 // Evento
-Router.get('/eventos', EventosController.listarEventos);
-Router.get('/cadastrar/evento', EventosController.pageCadastrarEvento);
-Router.post(
+routes.get('/eventos', EventosController.listarEventos);
+routes.get('/cadastrar/evento', EventosController.pageCadastrarEvento);
+routes.post(
   '/cadastrar/evento',
   multer(multerConfig).single('file'),
   EventosController.cadastrarEvento,
 );
-Router.get('/editar/evento/:id', EventosController.pageEditarEvento);
-Router.post('/editar/evento', EventosController.editarEvento);
-Router.post('/deletar/evento', EventosController.deletarEvento);
+routes.get('/editar/evento/:id', EventosController.pageEditarEvento);
+routes.post('/editar/evento', EventosController.editarEvento);
+routes.post('/deletar/evento', EventosController.deletarEvento);
 
 // Atleticas
-Router.get('/atleticas', AtleticaController.listarAtleticas);
-Router.get('/cadastrar/atletica', AtleticaController.pageCadastrarAtletica);
-Router.post('/cadastrar/atletica',
+routes.get('/atleticas', AtleticaController.listarAtleticas);
+routes.get('/cadastrar/atletica', AtleticaController.pageCadastrarAtletica);
+routes.post('/cadastrar/atletica',
   multer(multerConfig).single('file'),
   AtleticaController.cadastrarAtletica);
-Router.get('/editar/atletica/:id', AtleticaController.pageEditarAtletica);
-Router.post('/editar/atletica', AtleticaController.editarAtletica);
-Router.post('/deletar/atletica', AtleticaController.deletarAtletica);
+routes.get('/editar/atletica/:id', AtleticaController.pageEditarAtletica);
+routes.post('/editar/atletica', AtleticaController.editarAtletica);
+routes.post('/deletar/atletica', AtleticaController.deletarAtletica);
 
-module.exports = Router;
+module.exports = routes;

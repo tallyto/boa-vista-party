@@ -1,20 +1,18 @@
 // Express
-const express = require('express');
+const { Router } = require('express');
 
-const Router = express.Router();
-const mongoose = require('mongoose');
-require('../models/eventoSchema');
+const routes = Router();
 
-const Eventos = mongoose.model('eventos');
+const Eventos = require('../models/eventoSchema');
 
 // Rotas
-Router.get('/', async (req, res) => {
+routes.get('/', async (req, res) => {
   const eventos = await Eventos.find();
   res.render('eventos', { eventos, title: 'Eventos' });
 });
 
-// Router.get('/projeto-x', (req, res) => {
+// routes.get('/projeto-x', (req, res) => {
 //   res.render('eventos/projeto-x');
 // });
 
-module.exports = Router;
+module.exports = routes;

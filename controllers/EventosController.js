@@ -1,9 +1,6 @@
-/* eslint-disable linebreak-style */
-const mongoose = require('mongoose');
 const removeImageS3 = require('./../config/removeImageS3');
-require('../models/eventoSchema');
 
-const Eventos = mongoose.model('eventos');
+const Eventos = require('../models/eventoSchema');
 
 class EventosController {
   async listarEventos(req, res) {

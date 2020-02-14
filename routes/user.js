@@ -1,60 +1,37 @@
-/* eslint-disable linebreak-style */
-/* eslint-disable no-console */
-/* eslint-disable no-unused-vars */
-/* eslint-disable no-undef */
-/* eslint-disable no-restricted-syntax */
 /* eslint-disable no-shadow */
-
 // Express
-const express = require('express');
+const { Router } = require('express');
 
-const Router = express.Router();
+const routes = Router();
 
 // Mongo db
-const mongoose = require('mongoose');
-require('../models/usuarioSchema');
-
-const Usuario = mongoose.model('usuarios');
 
 const bcrypt = require('bcrypt');
 const passport = require('passport');
-const { check, validationResult } = require('express-validator');
+const Yup = require('yup');
+const Usuario = require('../models/usuarioSchema');
 
-const { eAdmin } = require('./../helpers/eAdmin');
-
-Router.get('/cadastro', eAdmin, (req, res) => {
+routes.get('/cadastro', (req, res) => {
   res.render('usuarios/registro', { title: 'Cadastrar usuário' });
 });
 
-Router.post(
-  '/registro', eAdmin,
-  [
-    check('nome', 'O nome precisa ter no minimo 3 caracteres!').isLength({
-      min: 3,
-    }),
-    check('email', 'O email não é valido!').isEmail(),
-    check('senha', 'A senha precisa ter no minimo 4 caracteres!')
-      .isLength({ min: 4 })
-      .custom((value, { req, loc, path }) => {
-        if (value !== req.body.senha2) {
-          throw new Error('As senhas não são iguais!');
-        } else {
-          return value;
-        }
-      }),
-  ],
-  (req, res) => {
-    const erros = [];
-    const error = validationResult(req);
-    for (err of error.array()) {
-      erros.push({ texto: err.msg });
-    }
+routes.post(
+  '/registro',
+  async (req, res) => {
+    const schema = Yup.object().shape({
+      nome: Yup.string()
+        .min(3)
+        .required(),
+      email: Yup.string()
+        .email()
+        .required(),
+      senha: Yup.string()
+        .min(4)
+        .required(),
+      senha2: Yup.string().oneOf([Yup.ref('senha'), null]),
+    });
 
-    if (!error.isEmpty()) {
-      res.render('usuarios/registro', {
-        erros, title: 'Cadastrar usuário',
-      });
-    } else {
+    if (await schema.isValid(req.body)) {
       Usuario.findOne({
         email: req.body.email,
       })
@@ -62,9 +39,9 @@ Router.post(
           if (usuario) {
             req.flash(
               'error_msg',
-              'O email informado já possui cadastro no site!',
+              'O email informado já possui cadastro no site',
             );
-            res.redirect('/usuario/registro');
+            res.redirect('/usuario/cadastro');
           } else {
             const novoUsuario = new Usuario({
               nome: req.body.nome,
@@ -73,24 +50,24 @@ Router.post(
             });
 
             bcrypt.genSalt(10, (erro, salt) => {
-              bcrypt.hash(novoUsuario.senha, salt, (erro, hash) => {
+              bcrypt.hash(novoUsuario.senha, salt, async (erro, hash) => {
                 if (erro) {
-                  req.flash('error_msg', 'Erro ao cadastrar usuário!');
-                  res.redirect('/');
+                  req.flash('error_msg', 'Erro ao cadastrar usuário');
+                  res.redirect('/usuario/cadastro');
                 }
 
                 novoUsuario.senha = hash;
 
-                novoUsuario
+                await novoUsuario
                   .save()
                   .then(() => {
-                    req.flash('success_msg', 'Usuário cadastrado com sucesso!');
+                    req.flash('success_msg', 'Usuário cadastrado com sucesso');
                     res.redirect('/');
                   })
                   .catch((erro) => {
                     req.flash(
                       'error_msg',
-                      'Houve um erro ao criar o usuário tente novamente!',
+                      'Houve um erro ao criar o usuário, tente novamente',
                     );
                     res.redirect('/usuario/registro');
                   });
@@ -99,18 +76,25 @@ Router.post(
           }
         })
         .catch((err) => {
-          req.flash('error_msg', 'Houve um erro ao cadastrar o usuário!');
+          req.flash('error_msg', 'Houve um erro ao cadastrar o usuário');
           res.redirect('/');
         });
+    } else {
+      const erros = [];
+      erros.push({ texto: 'Dados invalidos' });
+      res.render('usuarios/registro', {
+        erros,
+        title: 'Boa Vista Party - Cadastrar Usuário',
+      });
     }
   },
 );
 
-Router.get('/login', (req, res) => {
+routes.get('/login', (req, res) => {
   res.render('usuarios/login', { title: 'Entrar' });
 });
 
-Router.post('/login', (req, res, next) => {
+routes.post('/login', (req, res, next) => {
   passport.authenticate('local', {
     successRedirect: '/',
     failureRedirect: '/usuario/login',
@@ -118,10 +102,10 @@ Router.post('/login', (req, res, next) => {
   })(req, res, next);
 });
 
-Router.get('/logout', (req, res) => {
+routes.get('/logout', (req, res) => {
   req.logOut();
   req.flash('success_msg', 'Deslogado com sucesso!');
   res.redirect('/');
 });
 
-module.exports = Router;
+module.exports = routes;

@@ -1,8 +1,6 @@
-const mongoose = require('mongoose');
-require('../models/atleticaSchema');
 const removeImageS3 = require('./../config/removeImageS3');
 
-const Atleticas = mongoose.model('atleticas');
+const Atleticas = require('../models/atleticaSchema');
 
 class AtleticaController {
   async listarAtleticas(req, res) {

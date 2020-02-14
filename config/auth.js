@@ -1,4 +1,3 @@
-/* eslint-disable linebreak-style */
 /* eslint-disable new-cap */
 /* eslint-disable consistent-return */
 

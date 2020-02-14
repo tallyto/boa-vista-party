@@ -6,24 +6,25 @@
     <a href="/admin/cadastrar/atletica"><button type="submit" class="btn btn-success">Cadastrar atletica</button></a>
     <div class="card-columns">
 
-    {{#each atleticas}}
+        {{#each atleticas}}
 
-    <div class="card mt-2">
-        <div class="card-body">
-            <h5>{{title}}</h5>
-            <p>Descrição: {{description}}</small><br>
-                <small>Data de criação: {{createdAt}}</small><br>
-                <a href="/admin/editar/atletica/{{_id}}"><button class="btn btn-success mt-2 ">Editar atletica</button></a>
-                <form action="/admin/deletar/atletica" method="POST">
-                    <input type="hidden" name="id" value="{{_id}}">
-                    <button type="submit" class="btn btn-danger ">Deletar atlética</button>
-                </form>
+        <div class="card mt-2">
+            <div class="card-body">
+                <h5>{{title}}</h5>
+                <p>Descrição: {{description}}</small><br>
+                    <small>Data de criação: {{createdAt}}</small><br>
+                    <a href="/admin/editar/atletica/{{_id}}"><button class="btn btn-success mt-2 ">Editar
+                            atletica</button></a>
+                    <form action="/admin/deletar/atletica" method="POST">
+                        <input type="hidden" name="id" value="{{_id}}">
+                        <button type="submit" class="btn btn-danger ">Deletar atlética</button>
+                    </form>
+            </div>
         </div>
-    </div>
-    
-    {{else}}
-    <h4 class="mt-2">Nenhuma atlética registrada</h4>
-    {{/each}}
+
+        {{else}}
+        <h4 class="mt-2">Nenhuma atlética registrada</h4>
+        {{/each}}
 
     </div>
 

@@ -1,4 +1,3 @@
-/* eslint-disable linebreak-style */
 /* eslint-disable no-param-reassign */
 const multer = require('multer');
 const path = require('path');
