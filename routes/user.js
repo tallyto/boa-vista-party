@@ -12,7 +12,7 @@ const Yup = require('yup');
 const Usuario = require('../models/usuarioSchema');
 
 routes.get('/cadastro', (req, res) => {
-  res.render('usuarios/registro', { title: 'Cadastrar usuário' });
+  res.render('usuarios/registro', { title: 'Boa Vista Party - Cadastro' });
 });
 
 routes.post(
@@ -69,7 +69,6 @@ routes.post(
                       'error_msg',
                       'Houve um erro ao criar o usuário, tente novamente',
                     );
-                    res.redirect('/usuario/registro');
                   });
               });
             });
@@ -77,21 +76,17 @@ routes.post(
         })
         .catch((err) => {
           req.flash('error_msg', 'Houve um erro ao cadastrar o usuário');
-          res.redirect('/');
+          res.redirect('/usuario/cadastro');
         });
     } else {
-      const erros = [];
-      erros.push({ texto: 'Dados invalidos' });
-      res.render('usuarios/registro', {
-        erros,
-        title: 'Boa Vista Party - Cadastrar Usuário',
-      });
+      req.flash('error_msg', 'Dados invalidos');
+      res.redirect('/usuario/cadastro');
     }
   },
 );
 
 routes.get('/login', (req, res) => {
-  res.render('usuarios/login', { title: 'Entrar' });
+  res.render('usuarios/login', { title: 'Boa Vista Party - Entrar' });
 });
 
 routes.post('/login', (req, res, next) => {

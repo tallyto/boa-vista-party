@@ -8,7 +8,7 @@ const Eventos = require('../models/eventoSchema');
 // Rotas
 routes.get('/', async (req, res) => {
   const eventos = await Eventos.find();
-  res.render('eventos', { eventos, title: 'Eventos' });
+  res.render('eventos', { eventos, title: 'Boa Vista Party - Eventos' });
 });
 
 // routes.get('/projeto-x', (req, res) => {

@@ -5,17 +5,17 @@ const Eventos = require('../models/eventoSchema');
 class EventosController {
   async listarEventos(req, res) {
     const eventos = await Eventos.find().sort({ title: 1 });
-    res.render('admin/eventos', { eventos, title: 'Eventos' });
+    res.render('admin/eventos', { eventos, title: 'Boa Vista Party - Eventos' });
   }
 
   pageCadastrarEvento(req, res) {
-    res.render('admin/cadastrar-evento', { title: 'Cadastrar Evento' });
+    res.render('admin/cadastrar-evento', { title: 'Boa Vista Party - Cadastrar Evento' });
   }
 
   async pageEditarEvento(req, res) {
     const { id } = req.params;
     const evento = await Eventos.findById({ _id: id });
-    res.render('admin/editar-evento', { evento, title: `Editar evento ${evento.title}` });
+    res.render('admin/editar-evento', { evento, title: `Boa Vista Party - Editar Evento ${evento.title}` });
   }
 
   async editarEvento(req, res) {
@@ -39,7 +39,6 @@ class EventosController {
 
   async deletarEvento(req, res) {
     const { id } = req.body;
-    const erros = [];
 
     try {
       const evento = await Eventos.findByIdAndDelete({ _id: id });
@@ -47,41 +46,35 @@ class EventosController {
       req.flash('success_msg', 'Evento removido com sucesso');
       res.redirect('/eventos');
     } catch (error) {
-      erros.push({ texto: 'Houve um erro ao deletar o evento' });
-      res.render('admin/eventos', {
-        erros, title: 'Eventos',
-      });
+      req.flash('error_msg', 'Houve um erro ao deletar o evento');
+      res.redirect('/admin/eventos');
     }
   }
 
   async cadastrarEvento(req, res) {
-    const { title, description, slug } = req.body;
-    const {
-      originalname: name, size, key, location: url = '',
-    } = req.file;
-    const newEvento = {
-      title,
-      description,
-      slug,
-      img: {
-        name,
-        size,
-        key,
-        url,
-      },
-    };
-
-    const erros = [];
-
     try {
+      const { title, description, slug } = req.body;
+      const {
+        originalname: name, size, key, location: url = '',
+      } = req.file;
+      const newEvento = {
+        title,
+        description,
+        slug,
+        img: {
+          name,
+          size,
+          key,
+          url,
+        },
+      };
+
       await Eventos.create(newEvento);
       req.flash('success_msg', 'Evento criado com sucesso');
       res.redirect('/eventos');
     } catch (error) {
-      erros.push({ texto: 'Houve um erro ao cadastrar o evento' });
-      res.render('admin/cadastrar-evento', {
-        erros, title: 'Cadastrar Evento',
-      });
+      req.flash('error_msg', 'Houve um erro ao cadastrar o evento');
+      res.redirect('/admin/cadastrar/evento');
     }
   }
 }
