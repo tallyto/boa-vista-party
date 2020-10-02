@@ -6,7 +6,7 @@ const routes = Router();
 
 // Mongo db
 
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const passport = require('passport');
 const Yup = require('yup');
 const Usuario = require('../models/usuarioSchema');
