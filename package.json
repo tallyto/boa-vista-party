@@ -38,7 +38,7 @@
     "type": "git",
     "url": "git+https://github.com/otallyto/boa-vista-party.git"
   },
-  "keywords": [],
+  "keywords": ["site", "eventos", "atleticas", "universidade"],
   "author": "",
   "bugs": {
     "url": "https://github.com/otallyto/boa-vista-party/issues"
