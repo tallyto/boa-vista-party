@@ -21,8 +21,8 @@ const storageTypes = {
   }),
   s3: multerS3({
     s3: new aws.S3({
-      accessKeyId: 'AKIAVHKUOQJ4DWASD7F5',
-      secretAccessKey: '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',
+      accessKeyId: 'access_key',
+      secretAccessKey: 'secret_key',
       region: 'sa-east-1',
     }),
     bucket: 'upload-party',
