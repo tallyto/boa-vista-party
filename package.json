@@ -16,7 +16,7 @@
     "helmet": "^3.21.2",
     "mongoose": "^5.8.1",
     "multer": "^1.4.2",
-    "multer-s3": "^2.9.0",
+    "multer-s3": "^2.10.0",
     "passport": "^0.4.1",
     "passport-local": "^1.0.0",
     "serve-favicon": "^2.5.0",
@@ -38,7 +38,12 @@
     "type": "git",
     "url": "git+https://github.com/otallyto/boa-vista-party.git"
   },
-  "keywords": ["site", "eventos", "atleticas", "universidade"],
+  "keywords": [
+    "site",
+    "eventos",
+    "atleticas",
+    "universidade"
+  ],
   "author": "",
   "bugs": {
     "url": "https://github.com/otallyto/boa-vista-party/issues"
