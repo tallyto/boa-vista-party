@@ -74,4 +74,4 @@ Este projeto está licenciado sob a Licença MIT - veja o arquivo [LICENSE](LICE
 
 ## Contato
 
-Se você tiver alguma dúvida ou precisar entrar em contato, você pode enviar um e-mail para [rodrigues.tallyto@gmail.com] ou visitar o perfil do GitHub em [Tallyto](https://github.com/tallyto).
+Se você tiver alguma dúvida ou precisar entrar em contato, você pode enviar um e-mail para [rodrigues.tallyto@gmail.com](mailto:rodrigues.tallyto@gmail.com) ou visitar o perfil do GitHub em [Tallyto](https://github.com/tallyto).
