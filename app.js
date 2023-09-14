@@ -1,5 +1,6 @@
 const express = require('express');
-const handlebars = require('express-handlebars');
+const Handlebars = require('handlebars')
+const expressHandlebars = require('express-handlebars');
 const serveStatic = require('serve-static');
 const favicon = require('serve-favicon');
 const bodyParser = require('body-parser');
@@ -8,7 +9,7 @@ const cookieParser = require('cookie-parser');
 const flash = require('connect-flash');
 const helmet = require('helmet');
 const compression = require('compression');
-
+const {allowInsecurePrototypeAccess} = require('@handlebars/allow-prototype-access')
 // Autenticação
 const passport = require('passport');
 require('./config/auth')(passport);
@@ -66,14 +67,16 @@ class App {
     });
 
     // Handlebars
-    this.server.engine('handlebars', handlebars({ defaultLayout: 'main' }));
+    this.server.engine('handlebars', expressHandlebars({
+      handlebars: allowInsecurePrototypeAccess(Handlebars)
+    }));
     this.server.set('view engine', 'handlebars');
   }
 
   db() {
     // MongoDB
     const Db = new MongoDB();
-    Db.ConnectProduction()
+    Db.ConnectDev()
       .then(() => console.log('Conexão efefutada com o banco de dados'))
       .catch((error) => {
         console.log(`erro: ${error}`);

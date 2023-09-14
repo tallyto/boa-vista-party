@@ -77,6 +77,7 @@ class AtleticaController {
       req.flash('success_msg', 'Atlética cadastrada com sucesso!');
       res.redirect('/atleticas');
     } catch (error) {
+      console.log(error)
       req.flash('error_msg', 'Houve um erro ao cadastrar a atlética!');
       res.redirect('/atleticas');
     }

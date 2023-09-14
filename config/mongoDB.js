@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 class MongoDB {
   constructor() {
     this.dev = 'mongodb://localhost:27017/party';
-    this.production = 'your_mongo_url';
+    this.production = 'mongodb://localhost:27017/party';
   }
 
   ConnectProduction() {

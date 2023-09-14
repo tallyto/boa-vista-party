@@ -65,6 +65,7 @@ routes.post(
                     res.redirect('/');
                   })
                   .catch((erro) => {
+                    console.log(erro)
                     req.flash(
                       'error_msg',
                       'Houve um erro ao criar o usuário, tente novamente',
@@ -75,6 +76,7 @@ routes.post(
           }
         })
         .catch((err) => {
+          console.log(err)
           req.flash('error_msg', 'Houve um erro ao cadastrar o usuário');
           res.redirect('/usuario/cadastro');
         });
